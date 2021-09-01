@@ -1,0 +1,34 @@
+{
+  "warehouses": [
+    {
+      "id": "warehouse 0",
+      "location": "location 0",
+      "inventory": "inventory 0"
+    },
+    {
+      "id": "warehouse 1",
+      "location": "location 1",
+      "inventory": "inventory 1"
+    },
+    {
+      "id": "warehouse 2",
+      "location": "location 2",
+      "inventory": "inventory 2"
+    },
+    {
+      "id": "warehouse 3",
+      "location": "location 3",
+      "inventory": "inventory 3"
+    },
+    {
+      "id": "warehouse 4",
+      "location": "location 4",
+      "inventory": "inventory 4"
+    },
+    {
+      "id": "warehouse 5",
+      "location": "location 5",
+      "inventory": "inventory 5"
+    }
+  ]
+}

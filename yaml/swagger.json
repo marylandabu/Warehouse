@@ -1,0 +1,339 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Vandelay Industries API - DRAFT",
+      "description": "[Vandelay Industries](http://www.urbandictionary.com/define.php?term=Vandelay) is a vertically integrated chemical manufaturing, import/export, and sales enterprise headquartered in the Upper West Side, NYC. It was founded by Art Vandely in 1990.\n\nIt is known both for the quality of its product as well as its aggressive salesperson recruiting program.\n\nThe Vandelay Industries API platform, documented here, represents a unified view of its ERP and CRM systems for use by both internal applications and 3rd-party strategic partner system integrations.\n \n     \n",
+      "version": "0.0.1"
+    },
+    "host": "vandelay.apivista.com",
+    "schemes": [
+      "https",
+      "http"
+    ],
+    "basePath": "/v1",
+    "produces": [
+      "application/json",
+      "text/plain"
+    ],
+    "paths": {
+      "/text": {
+        "get": {
+          "tags": [
+            "StackOverflow"
+          ],
+          "summary": "Return plain text w/ line breaks...",
+          "operationId": "showText",
+          "parameters": [
+            {
+              "name": "limit",
+              "in": "query",
+              "description": "How many items to return at one time (max 100)",
+              "minimum": 0,
+              "maximum": 63333,
+              "required": false,
+              "type": "integer",
+              "format": "int32"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Text"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/factories": {
+        "get": {
+          "tags": [
+            "real estate"
+          ],
+          "summary": "List factories in the ERP system",
+          "description": "The factory is an important top-level object for tracking both manufacturing activities as well as supply chain & order fulfillment, underpinning Vandelay's import/export business.",
+          "operationId": "getFactories",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Factory"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/factories/{factoryId}/machines": {
+        "get": {
+          "tags": [
+            "capital equipment"
+          ],
+          "summary": "List machines at a given factory",
+          "description": "The factory is an important top-level object for tracking both manufacturing activities as well as supply chain & order fulfillment, underpinning Vandelay's import/export business.",
+          "operationId": "getMachines",
+          "parameters": [
+            {
+              "name": "factoryId",
+              "in": "path",
+              "description": "The ID of the factory housing the machine",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Machine"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/warehouses": {
+        "get": {
+          "tags": [
+            "real estate"
+          ],
+          "summary": "List warehouses in the ERP system",
+          "description": "The warehouse is an important top-level object for tracking both inbound material and outbound product.",
+          "operationId": "getWarehouses",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Warehouse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "/warehouses/{warehouseId}/inventory": {
+        "get": {
+          "tags": [
+            "inventory"
+          ],
+          "summary": "Return an array containing inventory for a single warehouse",
+          "description": "Currently an unpaged inventory list",
+          "operationId": "getWarehouse",
+          "parameters": [
+            {
+              "name": "warehouseId",
+              "in": "path",
+              "description": "The ID of the warehouse to return inventory for",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Inventory"
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": [
+            "inventory"
+          ],
+          "summary": "Records the addition of inventory to a warehouse",
+          "description": "xxx\n",
+          "operationId": "addItem",
+          "parameters": [
+            {
+              "name": "warehouseId",
+              "in": "path",
+              "description": "The ID of the warehouse receiving the item",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "item",
+              "description": "This object represents all the Item specifics\n",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/InventoryItem"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Item Added",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Inventory"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Factory": {
+        "type": "object",
+        "properties": {
+          "factoryId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "factoryName": {
+            "type": "string",
+            "example": "Newark Latex Mfg."
+          },
+          "factoryDescription": {
+            "type": "string",
+            "example": "Key East Coast facility for raw latex material to be processed into final products for the medical industry."
+          },
+          "factoryAddress": {
+            "$ref": "#/definitions/Address"
+          }
+        }
+      },
+      "Machine": {
+        "type": "object",
+        "properties": {
+          "factoryId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "machineId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "machineName": {
+            "type": "string",
+            "example": "Extruder AB-100"
+          },
+          "machineDescription": {
+            "type": "string",
+            "example": "Extruder with 1,000fpm output capacity"
+          }
+        }
+      },
+      "Warehouse": {
+        "type": "object",
+        "properties": {
+          "warehouseId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "warehouseName": {
+            "type": "string",
+            "example": "Pier 10 Holdings"
+          },
+          "warehouseDescription": {
+            "type": "string",
+            "example": "Key East Coast shipping/receiving location for storing finished product, ready for distribution."
+          },
+          "warehouseAddress": {
+            "$ref": "#/definitions/Address"
+          }
+        }
+      },
+      "Inventory": {
+        "type": "object",
+        "properties": {
+          "warehouseId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "itemId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "itemSKU": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "itemQuantity": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "itemName": {
+            "type": "string",
+            "example": "Waterproof seal"
+          },
+          "itemDescription": {
+            "type": "string",
+            "example": "For sealing specimens to preserve them"
+          }
+        }
+      },
+      "InventoryItem": {
+        "type": "object",
+        "properties": {
+          "itemSKU": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "itemQuantity": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "itemName": {
+            "type": "string",
+            "example": "Waterproof seal"
+          },
+          "itemDescription": {
+            "type": "string",
+            "example": "For sealing specimens to preserve them"
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "buildingName": {
+            "type": "string"
+          },
+          "streetLine1": {
+            "type": "string"
+          },
+          "streetLine2": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "stateProvince": {
+            "type": "string"
+          },
+          "zipPostalCode": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        }
+      },
+      "Text": {
+        "type": "object",
+        "properties": {
+          "multiLineString": {
+            "type": "string",
+            "example": "return \n\nvalue      \n"
+          }
+        }
+      }
+    }
+  }
